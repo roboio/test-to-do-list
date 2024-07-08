@@ -1,0 +1,27 @@
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+type Mutation {
+  addTodo(completed: Boolean!, task: String!): Todo
+  deleteTodo(id: ID!): Todo
+  updateTodo(completed: Boolean!, id: ID!): Todo
+}
+
+type Query {
+  getTodos: [Todo]
+}
+
+type Subscription {
+  onCreateTodo: Todo @aws_subscribe(mutations : ["addTodo"])
+  onDeleteTodo: Todo @aws_subscribe(mutations : ["deleteTodo"])
+  onUpdateTodo: Todo @aws_subscribe(mutations : ["updateTodo"])
+}
+
+type Todo {
+  completed: Boolean!
+  id: ID!
+  task: String!
+}
